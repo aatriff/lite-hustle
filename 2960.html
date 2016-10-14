@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name = "viewport" content = "user-scalable=no, width=device-width, height=device-height">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hustle Database</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css'>
+    <link type="text/css" rel="stylesheet" href="css/stylesheet.css"/>
+  </head>
+
+  <body ng-app="HustleApp" ng-controller="dancerController">
+
+    <div class="content">
+        <div class="navigation-topbar">
+            <div class="navigation-topbar-secondary-text"># {{dancer.id}}</div>
+            <div class="navigation-topbar-main-text">{{dancer.fio}}</div>
+        </div>
+        <ul class="navigation-view">
+            <li class="navigation-item-wo-border">
+                <div class="navigation-item-header grey-text">Клубная принадлежность</div>
+                <div>{{dancer.club}}</div>
+            </li>
+            <li class="navigation-item-wo-border">
+                <div class="navigation-item-header grey-text">Баллы</div>
+                <div class="point-table-holder">
+                    <div class="float-left blue-bubble">{{dancer.class}}</div>
+                    <table class="points-table">
+                        <tr>
+                            <td ng-repeat="d in ['E', 'D', 'C', 'B', 'A']" class="grey-text" class="points-table-cell">{{d}}</td>
+                        </tr>
+                        <tr>
+                            <td class="points-table-cell">{{dancer.e_points}}</td>
+                            <td class="points-table-cell">{{dancer.d_points}}</td>
+                            <td class="points-table-cell">{{dancer.c_points}}</td>
+                            <td class="points-table-cell">{{dancer.b_points}}</td>
+                            <td class="points-table-cell">{{dancer.a_points}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="point-table-holder">
+                    <div class="float-left blue-bubble">{{dancer.class_dnd}}</div>
+                    <table class="points-table">
+                        <tr>
+                            <td ng-repeat="d in ['Bg', 'Rs', 'M', 'S', 'Ch']" class="grey-text points-table-cell">{{d}}</td>
+                        </tr>
+                        <tr>
+                            <td class="points-table-cell">{{dancer.bg_points}}</td>
+                            <td class="points-table-cell">{{dancer.rs_points}}</td>
+                            <td class="points-table-cell">{{dancer.m_points}}</td>
+                            <td class="points-table-cell">{{dancer.s_points}}</td>
+                            <td class="points-table-cell">{{dancer.ch_points}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+            <li ng-repeat="style in results" class="navigation-item-wo-border">
+                <div  class="navigation-item-header grey-text">{{style.type}}</div>
+                <md-tabs md-border-bottom="0" md-dynamic-height md-border-bottom>
+                    <md-tab ng-repeat="cl in style.results" label="{{cl.class}}">
+                        <ul class="inner_ul">
+                            <li ng-repeat="r in cl.results | orderBy: '-competion_date'" class="navigation-item-wo-intend">
+                                <div class="navigation-item-content">
+                                    <div class="blue-bubble">
+                                        {{r.class}}
+                                    </div>
+                                    <div ng-if="r.points != 0" class="green-bubble points-bubble-position">
+                                        +{{r.points}}
+                                    </div>
+                                </div>
+                                <div class="navigation-item-middle-item">
+                                    <div class="navigation-item-main-text">
+                                        {{r.competion_name}}
+                                    </div>
+                                    <a href="#/profile/{{ r.partner_id }}" ng-click="next()" class="grey-text">
+                                        {{r.partner}}
+                                    </a>
+                                    <div class="grey-text">
+                                        {{r.competion_date}}
+                                    </div>
+                                </div>
+                                <div class="navigation-item-middle-item">
+                                    <div class="grey-text">
+                                        {{r.place}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        </md-tab>
+                </md-tabs>
+            </li>
+        </ul>
+    </div> 
+
+
+    <div id="dancer" data-dancer='[{"id":"2960","fio":"Чегодаева Василина","club":"Движение (г.Красноярск)","class":"D","e_points":"0","d_points":"0","c_points":"0","b_points":"0","a_points":"0","class_dnd":"Bg","bg_points":"0","rs_points":"0","m_points":"0","s_points":"0","ch_points":"0"}]'>
+    </div>
+
+    <div id="competions" data-competions='[{"id":"251","name":"Открытый турнир Красноярск","date":"2011.10.16","type":"pair"},
+{"id":"275","name":"Открытый турнир E+D класс","date":"2011.04.24","type":"pair"},
+{"id":"281","name":"Кубок Движения г.Красноярск","date":"2011.03.12","type":"pair"},
+{"id":"286","name":"Открытый турнир г.Красноярск","date":"2011.02.06","type":"pair"},
+{"id":"296","name":"Кубок Сибири","date":"2010.11.06","type":"pair"}]'>
+    </div>
+
+    <div id="participating" data-participating='[{"competion_id":"251","dancer_id":"2960","class":"D","result":"25/26","points":"0","partner":"0"},
+{"competion_id":"275","dancer_id":"2960","class":"D","result":"12/23","points":"0","partner":"2938"},
+{"competion_id":"281","dancer_id":"2960","class":"D","result":"17/30","points":"0","partner":"0"},
+{"competion_id":"286","dancer_id":"2960","class":"D","result":"13/21","points":"0","partner":"0"},
+{"competion_id":"296","dancer_id":"2960","class":"D","result":"15/29","points":"0","partner":"0"}]'>
+    </div>
+
+    <div id="participatingjnj" data-participatingjnj='[]'>
+    </div>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js'></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/assets-cache.js'></script>
+
+    <!-- Modules -->
+    <script src="js/app.js"></script>
+
+  </body>
+</html>

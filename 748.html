@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name = "viewport" content = "user-scalable=no, width=device-width, height=device-height">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hustle Database</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css'>
+    <link type="text/css" rel="stylesheet" href="css/stylesheet.css"/>
+  </head>
+
+  <body ng-app="HustleApp" ng-controller="dancerController">
+
+    <div class="content">
+        <div class="navigation-topbar">
+            <div class="navigation-topbar-secondary-text"># {{dancer.id}}</div>
+            <div class="navigation-topbar-main-text">{{dancer.fio}}</div>
+        </div>
+        <ul class="navigation-view">
+            <li class="navigation-item-wo-border">
+                <div class="navigation-item-header grey-text">Клубная принадлежность</div>
+                <div>{{dancer.club}}</div>
+            </li>
+            <li class="navigation-item-wo-border">
+                <div class="navigation-item-header grey-text">Баллы</div>
+                <div class="point-table-holder">
+                    <div class="float-left blue-bubble">{{dancer.class}}</div>
+                    <table class="points-table">
+                        <tr>
+                            <td ng-repeat="d in ['E', 'D', 'C', 'B', 'A']" class="grey-text" class="points-table-cell">{{d}}</td>
+                        </tr>
+                        <tr>
+                            <td class="points-table-cell">{{dancer.e_points}}</td>
+                            <td class="points-table-cell">{{dancer.d_points}}</td>
+                            <td class="points-table-cell">{{dancer.c_points}}</td>
+                            <td class="points-table-cell">{{dancer.b_points}}</td>
+                            <td class="points-table-cell">{{dancer.a_points}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="point-table-holder">
+                    <div class="float-left blue-bubble">{{dancer.class_dnd}}</div>
+                    <table class="points-table">
+                        <tr>
+                            <td ng-repeat="d in ['Bg', 'Rs', 'M', 'S', 'Ch']" class="grey-text points-table-cell">{{d}}</td>
+                        </tr>
+                        <tr>
+                            <td class="points-table-cell">{{dancer.bg_points}}</td>
+                            <td class="points-table-cell">{{dancer.rs_points}}</td>
+                            <td class="points-table-cell">{{dancer.m_points}}</td>
+                            <td class="points-table-cell">{{dancer.s_points}}</td>
+                            <td class="points-table-cell">{{dancer.ch_points}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+            <li ng-repeat="style in results" class="navigation-item-wo-border">
+                <div  class="navigation-item-header grey-text">{{style.type}}</div>
+                <md-tabs md-border-bottom="0" md-dynamic-height md-border-bottom>
+                    <md-tab ng-repeat="cl in style.results" label="{{cl.class}}">
+                        <ul class="inner_ul">
+                            <li ng-repeat="r in cl.results | orderBy: '-competion_date'" class="navigation-item-wo-intend">
+                                <div class="navigation-item-content">
+                                    <div class="blue-bubble">
+                                        {{r.class}}
+                                    </div>
+                                    <div ng-if="r.points != 0" class="green-bubble points-bubble-position">
+                                        +{{r.points}}
+                                    </div>
+                                </div>
+                                <div class="navigation-item-middle-item">
+                                    <div class="navigation-item-main-text">
+                                        {{r.competion_name}}
+                                    </div>
+                                    <a href="#/profile/{{ r.partner_id }}" ng-click="next()" class="grey-text">
+                                        {{r.partner}}
+                                    </a>
+                                    <div class="grey-text">
+                                        {{r.competion_date}}
+                                    </div>
+                                </div>
+                                <div class="navigation-item-middle-item">
+                                    <div class="grey-text">
+                                        {{r.place}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        </md-tab>
+                </md-tabs>
+            </li>
+        </ul>
+    </div> 
+
+
+    <div id="dancer" data-dancer='[{"id":"748","fio":"Иванов Евгений Валерьевич","club":"Априори","class":"A","e_points":"0","d_points":"0","c_points":"12","b_points":"9","a_points":"2","class_dnd":"S","bg_points":"0","rs_points":"0","m_points":"0","s_points":"0","ch_points":"0"}]'>
+    </div>
+
+    <div id="competions" data-competions='[{"id":"154","name":"Кубок Чемпионов г.Москва","date":"2014.02.08","type":"pair"},
+{"id":"157","name":"Чемпионат России 2013 г.Москва","date":"2013.12.14","type":"pair"},
+{"id":"163","name":"Надежды России г.Москва","date":"2013.11.09","type":"pair"},
+{"id":"170","name":"Открытие Сезона г.Москва","date":"2013.09.14","type":"pair"},
+{"id":"175","name":"Командное первенство г.Москва","date":"2013.06.01","type":"pair"},
+{"id":"177","name":"Чемпионат Москвы 2013","date":"2013.05.18","type":"pair"},
+{"id":"181","name":"Dance Voyage г.Моска","date":"2013.04.20","type":"pair"},
+{"id":"182","name":"Танцевальный Район г.Москва","date":"2013.04.06","type":"pair"},
+{"id":"195","name":"AbsolutCup г.Моска","date":"2012.12.09","type":"pair"},
+{"id":"201","name":"Чемпионат России 2012 г.Москва","date":"2012.11.03","type":"pair"},
+{"id":"222","name":"Чемпионат Москвы 2012","date":"2012.05.26","type":"pair"},
+{"id":"231","name":"Кубок АСХ 2012","date":"2012.03.10","type":"pair"},
+{"id":"243","name":"Чемпионат России 2011","date":"2011.12.10","type":"pair"},
+{"id":"273","name":"Чемпионат Москвы 2011","date":"2011.05.14","type":"pair"},
+{"id":"279","name":"Кубок АСХ","date":"2011.03.20","type":"pair"},
+{"id":"287","name":"Кубок Чемпионов 2","date":"2011.02.06","type":"pair"},
+{"id":"292","name":"Кубок Особняка","date":"2010.12.05","type":"pair"},
+{"id":"293","name":"Чемпионат России + Будущ.чемпионы","date":"2010.11.20","type":"pair"},
+{"id":"297","name":"Осенний Кубок","date":"2010.10.31","type":"pair"},
+{"id":"342","name":"Весенний кубок 2009","date":"2009.03.22","type":"pair"},
+{"id":"344","name":"Звезды Хастла 2009","date":"2009.03.01","type":"pair"},
+{"id":"345","name":"Кубок АСХ 2009","date":"2009.02.14","type":"pair"},
+{"id":"348","name":"Зимний Кубок","date":"2008.12.14","type":"pair"},
+{"id":"351","name":"Чемпионат России 2008","date":"2008.11.08","type":"pair"},
+{"id":"352","name":"Осенний кубок Vestadance","date":"2008.10.19","type":"pair"},
+{"id":"354","name":"Чемпионат Москвы 2008","date":"2008.09.07","type":"pair"},
+{"id":"355","name":"Летний кубок Весты","date":"2008.08.24","type":"pair"},
+{"id":"361","name":"Полёт-2","date":"2008.04.27","type":"pair"},
+{"id":"362","name":"Весенний Кубок Vestadance","date":"2008.04.13","type":"pair"},
+{"id":"363","name":"Звезды Хастла 2008","date":"2008.03.16","type":"pair"},
+{"id":"365","name":"Чемпионат АСХ","date":"2008.02.09","type":"pair"},
+{"id":"366","name":"Дебют 3","date":"2008.01.20,27","type":"pair"},
+{"id":"368","name":"Чемпионат РЦ Самолет","date":"2007.11.05","type":"pair"},
+{"id":"370","name":"Осенний Бал NClub","date":"2007.10.28","type":"pair"},
+{"id":"372","name":"Гран При России","date":"2007.09.23","type":"pair"},
+{"id":"373","name":"Держи Ритм","date":"2007.09.09","type":"pair"}]'>
+    </div>
+
+    <div id="participating" data-participating='[{"competion_id":"154","dancer_id":"748","class":"A","result":"6/6","points":"0","partner":"1252"},
+{"competion_id":"163","dancer_id":"748","class":"A","result":"6/6","points":"0","partner":"1252"},
+{"competion_id":"170","dancer_id":"748","class":"A","result":"3/3","points":"0","partner":"0"},
+{"competion_id":"181","dancer_id":"748","class":"A","result":"2/3","points":"0","partner":"1252"},
+{"competion_id":"182","dancer_id":"748","class":"A","result":"4/5","points":"0","partner":"1252"},
+{"competion_id":"195","dancer_id":"748","class":"A","result":"1/3","points":"0","partner":"1252"},
+{"competion_id":"201","dancer_id":"748","class":"A","result":"11/12","points":"0","partner":"1252"},
+{"competion_id":"222","dancer_id":"748","class":"A","result":"11/11","points":"0","partner":"1252"},
+{"competion_id":"231","dancer_id":"748","class":"A","result":"3/3","points":"0","partner":"1252"},
+{"competion_id":"243","dancer_id":"748","class":"A","result":"10/14","points":"0","partner":"1252"},
+{"competion_id":"279","dancer_id":"748","class":"A","result":"5/5","points":"0","partner":"1252"},
+{"competion_id":"287","dancer_id":"748","class":"A","result":"7/7","points":"0","partner":"1252"},
+{"competion_id":"292","dancer_id":"748","class":"B","result":"2/9","points":"2","partner":"1252"},
+{"competion_id":"293","dancer_id":"748","class":"B","result":"13/30","points":"1","partner":"0"},
+{"competion_id":"297","dancer_id":"748","class":"B","result":"2/2","points":"0","partner":"1252"},
+{"competion_id":"342","dancer_id":"748","class":"A","result":"5/5","points":"0","partner":"829"},
+{"competion_id":"345","dancer_id":"748","class":"A","result":"2/6","points":"2","partner":"0"},
+{"competion_id":"348","dancer_id":"748","class":"A","result":"5/5","points":"0","partner":"829"},
+{"competion_id":"351","dancer_id":"748","class":"B","result":"4/15","points":"2","partner":"0"},
+{"competion_id":"352","dancer_id":"748","class":"B","result":"2/7","points":"2","partner":"829"},
+{"competion_id":"355","dancer_id":"748","class":"A","result":"4/4","points":"0","partner":"717"},
+{"competion_id":"361","dancer_id":"748","class":"B","result":"4/8","points":"0","partner":"643"},
+{"competion_id":"175","dancer_id":"748","class":"A","result":"5/6","points":"0","partner":"1252"},
+{"competion_id":"177","dancer_id":"748","class":"A","result":"11/11","points":"0","partner":"0"},
+{"competion_id":"273","dancer_id":"748","class":"A","result":"5/8","points":"0","partner":"1252"},
+{"competion_id":"344","dancer_id":"748","class":"A","result":"6/9","points":"0","partner":"829"},
+{"competion_id":"354","dancer_id":"748","class":"B","result":"1/5","points":"2","partner":"0"},
+{"competion_id":"362","dancer_id":"748","class":"B","result":"8/15","points":"0","partner":"643"},
+{"competion_id":"363","dancer_id":"748","class":"B","result":"10/14","points":"0","partner":"643"},
+{"competion_id":"365","dancer_id":"748","class":"B","result":"7/9","points":"0","partner":"0"},
+{"competion_id":"366","dancer_id":"748","class":"B","result":"8/8","points":"0","partner":"643"},
+{"competion_id":"368","dancer_id":"748","class":"C","result":"2/17","points":"3","partner":"643"},
+{"competion_id":"370","dancer_id":"748","class":"C","result":"1/21","points":"5","partner":"643"},
+{"competion_id":"372","dancer_id":"748","class":"C","result":"10/15","points":"0","partner":"0"},
+{"competion_id":"373","dancer_id":"748","class":"C","result":"2/19","points":"4","partner":"643"}]'>
+    </div>
+
+    <div id="participatingjnj" data-participatingjnj='[{"competion_id":"157","dancer_id":"748","class":"A","result":"15/17","points":"0"}]'>
+    </div>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js'></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/assets-cache.js'></script>
+
+    <!-- Modules -->
+    <script src="js/app.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name = "viewport" content = "user-scalable=no, width=device-width, height=device-height">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hustle Database</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css'>
+    <link type="text/css" rel="stylesheet" href="css/stylesheet.css"/>
+  </head>
+
+  <body ng-app="HustleApp" ng-controller="dancerController">
+
+    <div class="content">
+        <div class="navigation-topbar">
+            <div class="navigation-topbar-secondary-text"># {{dancer.id}}</div>
+            <div class="navigation-topbar-main-text">{{dancer.fio}}</div>
+        </div>
+        <ul class="navigation-view">
+            <li class="navigation-item-wo-border">
+                <div class="navigation-item-header grey-text">Клубная принадлежность</div>
+                <div>{{dancer.club}}</div>
+            </li>
+            <li class="navigation-item-wo-border">
+                <div class="navigation-item-header grey-text">Баллы</div>
+                <div class="point-table-holder">
+                    <div class="float-left blue-bubble">{{dancer.class}}</div>
+                    <table class="points-table">
+                        <tr>
+                            <td ng-repeat="d in ['E', 'D', 'C', 'B', 'A']" class="grey-text" class="points-table-cell">{{d}}</td>
+                        </tr>
+                        <tr>
+                            <td class="points-table-cell">{{dancer.e_points}}</td>
+                            <td class="points-table-cell">{{dancer.d_points}}</td>
+                            <td class="points-table-cell">{{dancer.c_points}}</td>
+                            <td class="points-table-cell">{{dancer.b_points}}</td>
+                            <td class="points-table-cell">{{dancer.a_points}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="point-table-holder">
+                    <div class="float-left blue-bubble">{{dancer.class_dnd}}</div>
+                    <table class="points-table">
+                        <tr>
+                            <td ng-repeat="d in ['Bg', 'Rs', 'M', 'S', 'Ch']" class="grey-text points-table-cell">{{d}}</td>
+                        </tr>
+                        <tr>
+                            <td class="points-table-cell">{{dancer.bg_points}}</td>
+                            <td class="points-table-cell">{{dancer.rs_points}}</td>
+                            <td class="points-table-cell">{{dancer.m_points}}</td>
+                            <td class="points-table-cell">{{dancer.s_points}}</td>
+                            <td class="points-table-cell">{{dancer.ch_points}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+            <li ng-repeat="style in results" class="navigation-item-wo-border">
+                <div  class="navigation-item-header grey-text">{{style.type}}</div>
+                <md-tabs md-border-bottom="0" md-dynamic-height md-border-bottom>
+                    <md-tab ng-repeat="cl in style.results" label="{{cl.class}}">
+                        <ul class="inner_ul">
+                            <li ng-repeat="r in cl.results | orderBy: '-competion_date'" class="navigation-item-wo-intend">
+                                <div class="navigation-item-content">
+                                    <div class="blue-bubble">
+                                        {{r.class}}
+                                    </div>
+                                    <div ng-if="r.points != 0" class="green-bubble points-bubble-position">
+                                        +{{r.points}}
+                                    </div>
+                                </div>
+                                <div class="navigation-item-middle-item">
+                                    <div class="navigation-item-main-text">
+                                        {{r.competion_name}}
+                                    </div>
+                                    <a href="#/profile/{{ r.partner_id }}" ng-click="next()" class="grey-text">
+                                        {{r.partner}}
+                                    </a>
+                                    <div class="grey-text">
+                                        {{r.competion_date}}
+                                    </div>
+                                </div>
+                                <div class="navigation-item-middle-item">
+                                    <div class="grey-text">
+                                        {{r.place}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        </md-tab>
+                </md-tabs>
+            </li>
+        </ul>
+    </div> 
+
+
+    <div id="dancer" data-dancer='[{"id":"5547","fio":"Вешкин Павел Андреевич","club":"Движение (г.Красноярск)","class":"D","e_points":"6","d_points":"0","c_points":"0","b_points":"0","a_points":"0","class_dnd":"Bg","bg_points":"0","rs_points":"0","m_points":"0","s_points":"0","ch_points":"0"}]'>
+    </div>
+
+    <div id="competions" data-competions='[{"id":"40","name":"Шаг вперед г.Красноярск","date":"2016.04.02","type":"pair"},
+{"id":"43","name":"Открытый кубок Движения г.Красноярск","date":"2016.03.12","type":"pair"},
+{"id":"49","name":"Открытый турнир E+D г.Красноярск","date":"2016.02.07","type":"pair"},
+{"id":"71","name":"Шаг вперед г.Красноярск","date":"2015.09.27","type":"pair"},
+{"id":"84","name":"На пути к звездам г.Красноярск ","date":"2015.06.06","type":"pair"},
+{"id":"90","name":"Открытый турнир E+D классов г.Красноярск","date":"2015.04.26","type":"pair"},
+{"id":"99","name":"Открытый кубок Движения г.Красноярск","date":"2015.03.14","type":"pair"},
+{"id":"104","name":"Открытый турнир E-D классов г.Красноярск","date":"2015.02.15","type":"pair"},
+{"id":"136","name":"На пути к звездам г.Красноярск","date":"2014.06.08","type":"pair"},
+{"id":"156","name":"HOT WINTER CUP г.Красноярск","date":"2014.03.01","type":"pair"},
+{"id":"158","name":"Открытый турнир г.Красноярск","date":"2013.12.08","type":"pair"},
+{"id":"164","name":"Чемпионат Сибири г.Красноярск","date":"2013.11.02","type":"pair"},
+{"id":"174","name":"На пути к звездам г.Красноярск","date":"2013.06.08","type":"pair"},
+{"id":"179","name":"Турнир для E+D класса. г.Красноярск","date":"2013.04.28","type":"pair"},
+{"id":"40","name":"Шаг вперед г.Красноярск","date":"2016.04.02","type":"jnj"},
+{"id":"43","name":"Открытый кубок Движения г.Красноярск","date":"2016.03.12","type":"jnj"},
+{"id":"49","name":"Открытый турнир E+D г.Красноярск","date":"2016.02.07","type":"jnj"},
+{"id":"71","name":"Шаг вперед г.Красноярск","date":"2015.09.27","type":"jnj"},
+{"id":"84","name":"На пути к звездам г.Красноярск ","date":"2015.06.06","type":"jnj"},
+{"id":"90","name":"Открытый турнир E+D классов г.Красноярск","date":"2015.04.26","type":"jnj"},
+{"id":"99","name":"Открытый кубок Движения г.Красноярск","date":"2015.03.14","type":"jnj"},
+{"id":"104","name":"Открытый турнир E-D классов г.Красноярск","date":"2015.02.15","type":"jnj"}]'>
+    </div>
+
+    <div id="participating" data-participating='[{"competion_id":"40","dancer_id":"5547","class":"D","result":"11/14","points":"0","partner":"0"},
+{"competion_id":"43","dancer_id":"5547","class":"D","result":"12/12","points":"0","partner":"0"},
+{"competion_id":"49","dancer_id":"5547","class":"D","result":"11/11","points":"0","partner":"0"},
+{"competion_id":"84","dancer_id":"5547","class":"E","result":"3/16","points":"3","partner":"7248"},
+{"competion_id":"90","dancer_id":"5547","class":"E","result":"3/13","points":"2","partner":"7248"},
+{"competion_id":"99","dancer_id":"5547","class":"E","result":"9/11","points":"0","partner":"7248"},
+{"competion_id":"104","dancer_id":"5547","class":"E","result":"6/12","points":"1","partner":"7248"},
+{"competion_id":"156","dancer_id":"5547","class":"D","result":"15/22","points":"0","partner":"4268"},
+{"competion_id":"158","dancer_id":"5547","class":"D","result":"17/17","points":"0","partner":"0"},
+{"competion_id":"164","dancer_id":"5547","class":"D","result":"27/27","points":"0","partner":"0"},
+{"competion_id":"174","dancer_id":"5547","class":"D","result":"16/16","points":"0","partner":"0"},
+{"competion_id":"179","dancer_id":"5547","class":"E","result":"15/17","points":"0","partner":"5558"}]'>
+    </div>
+
+    <div id="participatingjnj" data-participatingjnj='[{"competion_id":"71","dancer_id":"5547","class":"Bg","result":"11/13","points":"0"},
+{"competion_id":"84","dancer_id":"5547","class":"Bg","result":"16/21","points":"0"},
+{"competion_id":"99","dancer_id":"5547","class":"Bg","result":"16/16","points":"0"},
+{"competion_id":"104","dancer_id":"5547","class":"Bg","result":"12/15","points":"0"},
+{"competion_id":"136","dancer_id":"5547","class":"E","result":"6/8","points":"0"}]'>
+    </div>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js'></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/assets-cache.js'></script>
+
+    <!-- Modules -->
+    <script src="js/app.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name = "viewport" content = "user-scalable=no, width=device-width, height=device-height">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hustle Database</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css'>
+    <link type="text/css" rel="stylesheet" href="css/stylesheet.css"/>
+  </head>
+
+  <body ng-app="HustleApp" ng-controller="dancerController">
+
+    <div class="content">
+        <div class="navigation-topbar">
+            <div class="navigation-topbar-secondary-text"># {{dancer.id}}</div>
+            <div class="navigation-topbar-main-text">{{dancer.fio}}</div>
+        </div>
+        <ul class="navigation-view">
+            <li class="navigation-item-wo-border">
+                <div class="navigation-item-header grey-text">Клубная принадлежность</div>
+                <div>{{dancer.club}}</div>
+            </li>
+            <li class="navigation-item-wo-border">
+                <div class="navigation-item-header grey-text">Баллы</div>
+                <div class="point-table-holder">
+                    <div class="float-left blue-bubble">{{dancer.class}}</div>
+                    <table class="points-table">
+                        <tr>
+                            <td ng-repeat="d in ['E', 'D', 'C', 'B', 'A']" class="grey-text" class="points-table-cell">{{d}}</td>
+                        </tr>
+                        <tr>
+                            <td class="points-table-cell">{{dancer.e_points}}</td>
+                            <td class="points-table-cell">{{dancer.d_points}}</td>
+                            <td class="points-table-cell">{{dancer.c_points}}</td>
+                            <td class="points-table-cell">{{dancer.b_points}}</td>
+                            <td class="points-table-cell">{{dancer.a_points}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="point-table-holder">
+                    <div class="float-left blue-bubble">{{dancer.class_dnd}}</div>
+                    <table class="points-table">
+                        <tr>
+                            <td ng-repeat="d in ['Bg', 'Rs', 'M', 'S', 'Ch']" class="grey-text points-table-cell">{{d}}</td>
+                        </tr>
+                        <tr>
+                            <td class="points-table-cell">{{dancer.bg_points}}</td>
+                            <td class="points-table-cell">{{dancer.rs_points}}</td>
+                            <td class="points-table-cell">{{dancer.m_points}}</td>
+                            <td class="points-table-cell">{{dancer.s_points}}</td>
+                            <td class="points-table-cell">{{dancer.ch_points}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+            <li ng-repeat="style in results" class="navigation-item-wo-border">
+                <div  class="navigation-item-header grey-text">{{style.type}}</div>
+                <md-tabs md-border-bottom="0" md-dynamic-height md-border-bottom>
+                    <md-tab ng-repeat="cl in style.results" label="{{cl.class}}">
+                        <ul class="inner_ul">
+                            <li ng-repeat="r in cl.results | orderBy: '-competion_date'" class="navigation-item-wo-intend">
+                                <div class="navigation-item-content">
+                                    <div class="blue-bubble">
+                                        {{r.class}}
+                                    </div>
+                                    <div ng-if="r.points != 0" class="green-bubble points-bubble-position">
+                                        +{{r.points}}
+                                    </div>
+                                </div>
+                                <div class="navigation-item-middle-item">
+                                    <div class="navigation-item-main-text">
+                                        {{r.competion_name}}
+                                    </div>
+                                    <a href="#/profile/{{ r.partner_id }}" ng-click="next()" class="grey-text">
+                                        {{r.partner}}
+                                    </a>
+                                    <div class="grey-text">
+                                        {{r.competion_date}}
+                                    </div>
+                                </div>
+                                <div class="navigation-item-middle-item">
+                                    <div class="grey-text">
+                                        {{r.place}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        </md-tab>
+                </md-tabs>
+            </li>
+        </ul>
+    </div> 
+
+
+    <div id="dancer" data-dancer='[{"id":"5757","fio":"Максимова Нина Сергеевна","club":"Smile","class":"D","e_points":"6","d_points":"0","c_points":"0","b_points":"0","a_points":"0","class_dnd":"Bg","bg_points":"0","rs_points":"0","m_points":"0","s_points":"0","ch_points":"0"}]'>
+    </div>
+
+    <div id="competions" data-competions='[{"id":"86","name":"Командное Первенство 2015 г.Москва","date":"2015.05.30","type":"pair"},
+{"id":"88","name":"Чемпионат Москвы 2015 г.Москва","date":"2015.05.10","type":"pair"},
+{"id":"119","name":"Красный октябрь г.Москва","date":"2014.10.25","type":"pair"},
+{"id":"125","name":"H&D Festival Cup г.Москва","date":"2014.09.20","type":"pair"},
+{"id":"126","name":"Открытие сезона г.Москва","date":"2014.09.06","type":"pair"},
+{"id":"132","name":"Динамиада г.Москва","date":"2014.07.12","type":"pair"},
+{"id":"154","name":"Кубок Чемпионов г.Москва","date":"2014.02.08","type":"pair"},
+{"id":"170","name":"Открытие Сезона г.Москва","date":"2013.09.14","type":"pair"},
+{"id":"86","name":"Командное Первенство 2015 г.Москва","date":"2015.05.30","type":"jnj"},
+{"id":"88","name":"Чемпионат Москвы 2015 г.Москва","date":"2015.05.11","type":"jnj"},
+{"id":"119","name":"Красный октябрь г.Москва","date":"2014.10.25","type":"jnj"},
+{"id":"125","name":"Открытие сезона г.Москва","date":"2014.09.06","type":"jnj"}]'>
+    </div>
+
+    <div id="participating" data-participating='[{"competion_id":"119","dancer_id":"5757","class":"E","result":"3/21","points":"3","partner":"0"},
+{"competion_id":"125","dancer_id":"5757","class":"E","result":"4/8","points":"1","partner":"0"},
+{"competion_id":"126","dancer_id":"5757","class":"E","result":"10/35","points":"1","partner":"0"},
+{"competion_id":"132","dancer_id":"5757","class":"E","result":"12/23","points":"0","partner":"0"},
+{"competion_id":"154","dancer_id":"5757","class":"E","result":"22/51","points":"1","partner":"0"},
+{"competion_id":"170","dancer_id":"5757","class":"E","result":"27/42","points":"0","partner":"0"}]'>
+    </div>
+
+    <div id="participatingjnj" data-participatingjnj='[{"competion_id":"86","dancer_id":"5757","class":"Bg","result":"48/102","points":"0"},
+{"competion_id":"88","dancer_id":"5757","class":"Bg","result":"74/118","points":"0"},
+{"competion_id":"119","dancer_id":"5757","class":"Bg","result":"42/50","points":"0"},
+{"competion_id":"125","dancer_id":"5757","class":"Bg","result":"36/71","points":"0"}]'>
+    </div>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js'></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/assets-cache.js'></script>
+
+    <!-- Modules -->
+    <script src="js/app.js"></script>
+
+  </body>
+</html>
